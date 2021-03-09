@@ -25,12 +25,12 @@ async function run() {
     const user = users[0].rows[0];
 
     await Promise.all(
-      playshare.map(animal => {
+      playshare.map(share => {
         return client.query(`
-                    INSERT INTO playshare (name, cool_factor, owner_id)
-                    VALUES ($1, $2, $3);
+                    INSERT INTO playshare (name, uri, playlist_id, owner_name, owner_id)
+                    VALUES ($1, $2, $3, $4, $5);
                 `,
-        [animal.name, animal.cool_factor, user.id]);
+        [share.name, share.uri, share.playlist_id, share.owner_name, user.id]);
       })
     );
     
