@@ -16,7 +16,14 @@ async function run() {
                     id SERIAL PRIMARY KEY,
                     email VARCHAR(256) NOT NULL,
                     hash VARCHAR(512) NOT NULL
-                );           
+                );
+                CREATE TABLE comments (
+                  id SERIAL PRIMARY KEY NOT NULL,
+                  comment_test VARCHAR(512) NOT NULL,
+                  user_email VARCHAR(512) NOT NULL,
+                  playlistid VARCHAR(512) NOT NULL,
+                  comments_id INTEGER REFERENCES users(id)
+             );            
                 CREATE TABLE playshare (
                     id SERIAL PRIMARY KEY NOT NULL,
                     name VARCHAR(512) NOT NULL,
