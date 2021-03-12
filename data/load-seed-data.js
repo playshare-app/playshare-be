@@ -1,5 +1,6 @@
 const client = require('../lib/client');
 // import our seed data:
+const comments = require('./comments.js');
 const playshare = require('./playshare.js');
 const usersData = require('./users.js');
 const { getEmoji } = require('../lib/emoji.js');
@@ -25,12 +26,22 @@ async function run() {
     const user = users[0].rows[0];
 
     await Promise.all(
-      playshare.map(animal => {
+      comments.map(booger => {
         return client.query(`
-                    INSERT INTO playshare (name, cool_factor, owner_id)
-                    VALUES ($1, $2, $3);
+                    INSERT INTO comments (comment_test, user_email, playlistid, comments_id)
+                    VALUES ($1, $2, $3, $4);
                 `,
-        [animal.name, animal.cool_factor, user.id]);
+        [booger.comment_test, booger.user_email, booger.playlistid, user.id]);
+      })
+    );
+
+    await Promise.all(
+      playshare.map(share => {
+        return client.query(`
+                    INSERT INTO playshare (name, uri, playlist_id, owner_name, owner_id)
+                    VALUES ($1, $2, $3, $4, $5);
+                `,
+        [share.name, share.uri, share.playlist_id, share.owner_name, user.id]);
       })
     );
     
